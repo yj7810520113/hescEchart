@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="hescEhartCore.js"></script>
+    <script src="hescEhartBarChart.js"></script>
+    <script src="dark.js"></script>
+    <script src="D3.V4.js"></script>
+</head>
+<div id="test">
+<div class="main" style="width: 600px;height:400px;" width="900px" height="100px"></div>
+</div>
+
+<script type="text/javascript">
+    var data=hescEchart.json('http://www.mmcode.top:8080/airzj/ajax/tianchi/aqibyday',function(error,data){
+        console.log(data);
+        return data;
+    });
+    console.log(hescEchart.select(".main").attr("width","500px"));
+    console.log(hescEchart.test());
+    console.log(hescEchart.select(".main").attr("width"));
+
+</script>
+</html>
