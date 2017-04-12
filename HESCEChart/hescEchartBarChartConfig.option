@@ -67,24 +67,39 @@
         //加data为指定data，不加data为默认
         data: xAxisData,
         silent: false,
+        //设置x，y轴是否翻转,其中category为默认的x轴
+        type:'category'
         //splitLine为
         splitLine: {
              show: false
         }
     },
     //y轴属性
-    yAxis:{},
+    yAxis:{
+        //加data为指定data，不加data为默认
+        data: xAxisData,
+        silent: false,
+        //设置x，y轴是否翻转，其中value为默认的y轴
+        type:'value'
+        //splitLine为
+        splitLine: {
+             show: false
+        }
+    },
     //绘图区相对于svg画布的偏移
     grid:{
         top:,left:,right:,bottom:
     }
     series:[{
         //和legend里面的data对应
+        //series个数为多维柱状图的维数
+        //其中data的长度和多维坐标下x轴上的个数相等
         name: 'bar',
         type: 'bar',
         //用于多维堆叠柱状图的区分
         stack: '',
         itemStyle: itemStyle,
+
         data: data1,
         animationDelay: function (idx) {
             return idx * 10;
