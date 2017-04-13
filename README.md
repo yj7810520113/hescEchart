@@ -19,15 +19,19 @@
     <script src="../echarts.js"></script>
 ```
 使用方法：
-```javascript
+```html
+<div id="test" style="width: 600px;height:400px;"/>
+<script type="text/javascript">
     var data=hescEchart.json('./barChartTest.Data',function(error,data){
-        hescEchart.title('TEST')
-            .legendAttr(["test1","test2"])//x轴值
-           // .reverse(false)//x,y轴是否转置
-          //  .stack([1,1,1,2])//是否为堆叠图以及堆叠图数据样式
-            .bar(data)//传递数据
-            .render();//渲染
-    });
+        hescEchart.select('test')
+            .title('TEST')
+            .legendAttr(["test1","test2"])//x轴值
+            // .reverse(false)//x,y轴是否转置
+            //  .stack([1,1,1,2])//是否为堆叠图以及堆叠图数据样式
+            .bar(data)//传递数据
+            .render();//渲染
+    });
+</script>
 ```
 [我的主页](http://mmcode.top)
 
