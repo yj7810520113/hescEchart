@@ -95,7 +95,7 @@
     //
     //     return obj;
     // }
-
+    var selectID=null;
     //option相关属性
     var option=null,
         backgroundColor = '#ffffff',
@@ -299,7 +299,7 @@
     }
 
     var render=function(){
-        var chart = echarts.init(document.getElementById('test'));
+        var chart = echarts.init(document.getElementById(selectID));
         chart.setOption(option);
         return this;
     }
@@ -343,6 +343,13 @@
         reverse=x;
         return this;
     }
+    var selectFun=function(selector){
+        selectID=selector;
+        return this;
+    }
+
+
+    exports.select = selectFun;
 
     exports.bar = bar;
     exports.stack=stackAttrFun;

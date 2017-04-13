@@ -419,15 +419,22 @@
     var json = type$1("application/json", function (xhr) {
         return JSON.parse(xhr.responseText);
     });
-    var select = function(selector) {
-        return typeof selector === "string"
-            ? new Selection([[document.querySelector(selector)]], [document.documentElement])
-            : new Selection([[selector]], root);
-    };
-
-
-    exports.select = select;
+    //修改d3.select方法至自定义select
+    // var select = function(selector) {
+    //     return typeof selector === "string"
+    //         ? new Selection([[document.querySelector(selector)]], [document.documentElement])
+    //         : new Selection([[selector]], root);
+    // };
+    // var selectID=null;
+    // // var selectFun=function(selector){
+    // //     selectID=selector;
+    // //     return this;
+    // // }
+    //
+    //
+    // exports.select = selectFun;
     exports.json = json;
+  //  exports.selectID=selectID;
     // exports.map = map$1;
     //  exports.dispatch = dispatch;
     // Object.defineProperty(exports, '__esModule', { value: true });

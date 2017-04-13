@@ -15,12 +15,15 @@
 
 <script type="text/javascript">
     var data=hescEchart.json('./barChartTest.Data',function(error,data){
-        hescEchart.title('TEST')
+        hescEchart.select('test')
+            .title('TEST')
             .legendAttr(["test1","test2"])
            // .reverse(false)
           //  .stack([1,1,1,2])
             .bar(data)
             .render();
     });
+
+
 </script>
 </html>
