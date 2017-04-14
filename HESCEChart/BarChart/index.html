@@ -14,15 +14,24 @@
 </div>
 
 <script type="text/javascript">
+    var a='1,1,1,1，1，1';
+    as=a.split(/,|，/);
+    for(var a in as){
+        console.log(a);
+    }
+
     var data=hescEchart.json('./barChartTest.Data',function(error,data){
         hescEchart.select('test')
             .title('TEST')
-            .legendAttr(["test1","test2"])
+            .legendAttr("test1,test2,test3,test4")
+            .xAxisData("x1,x2")
+            .reverse(true)
            // .reverse(false)
-          //  .stack([1,1,1,2])
+            .stack("1,2")
             .bar(data)
             .render();
     });
+
 
 
 </script>

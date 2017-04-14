@@ -23,6 +23,15 @@
     'use strict';
     var version = "0.0.1";
 
+    function stringToArray(d){
+        var ds=d.split(/,|，/);
+        d=[];
+        for(var dsi in ds){
+            d.push(ds[dsi]);
+        }
+        return d;
+    }
+
     // Object.prototype.each = function (obj, callback, args) {
     //     var value,
     //         i = 0,
@@ -102,23 +111,23 @@
         title = '我是标题，请设置title属性',
         subtitle = false,
         //legend数据的图示，默认为x轴坐标的数值
-        legendAttr = [],
+        legendAttr = '',
         //legend的对齐方式
         legendAlignAttr = 'left',
         //另存为图片等部分
         toolboxAttr = 'default',
         //x轴显示的坐标文字
-        xAxisData = null,
+        xAxisData = '',
         //x轴是否显示网格
         xAxisGridLineAttr = 'false',
         //y轴显示的坐标文字
-        yAxisDataAttr = null,
+        yAxisDataAttr = '',
         //y轴是否显示网格
         yAxisGridLineAttr = 'true',
         //绘图区相对于画布的偏移
         gridAttr = {top:'80px',left:'80px',right:'80px',bottom:'80px'},
         //stack的设置,默认情况下为一维普通柱状图
-        stackAttr=false,
+        stackAttr='',
         //判断x，y轴是否转置，即为条形图横过来画
         reverse=false;
 
@@ -149,6 +158,10 @@
             }
             // console.log();
         });}
+        //否则将legendAttr转换为array
+        else{
+            legendAttr=stringToArray(legendAttr);
+        }
 
         /*
          生成的配置文件
@@ -175,12 +188,13 @@
             xAxis:{
                 data:(function () {
                     if(reverse==false) {
-                        if (xAxisData != null) {
-                            return xAxisData;
+                        //处理string转换为array的情况
+                        if (xAxisData.length != 0) {
+                            return stringToArray(xAxisData);
                         }
                         else {
                             //返回默认xAxis坐标点的值
-                            if (seriesNum == 1 ||legendAttr.length!=0) {
+                            if (seriesNum == 1 &&legendAttr.length!=0) {
                                 //若为一维普通普通柱状图返回legendAttr即为坐标点值
                                 return legendAttr;
                             }
@@ -214,12 +228,13 @@
             yAxis:{
                 data:(function () {
                     if(reverse==true) {
-                        if (xAxisData != null) {
-                            return xAxisData;
+                        //处理string转换为array的情况
+                        if (xAxisData.length != 0) {
+                            return stringToArray(xAxisData);
                         }
                         else {
                             //返回默认xAxis坐标点的值
-                            if (seriesNum == 1 || legendAttr.length!=0) {
+                            if (seriesNum == 1 && legendAttr.length!=0) {
                                 //若为一维普通普通柱状图返回legendAttr即为坐标点值
                                 return legendAttr;
                             }
@@ -263,11 +278,16 @@
                         name:legendAttr[i],
                         type:'bar',
                         stack:(function () {
-                            if(stackAttr==false){
+                            if(stackAttr.length==0){
                                 return null;
                             }
                             else{
-                                return stackAttr[i];
+                                if(i<stringToArray(stackAttr).length) {
+                                    return (stringToArray(stackAttr))[i];
+                                }
+                                else{
+                                    return 'stacked';
+                                }
                             }
                         })(),
                         data:(function () {
@@ -299,6 +319,7 @@
     }
 
     var render=function(){
+        console.log(option);
         var chart = echarts.init(document.getElementById(selectID));
         chart.setOption(option);
         return this;
