@@ -26,6 +26,15 @@
         data:['bar1','bar2'],
         //方向
         align:'left'
+        /*
+         *4.14新加属性
+         *
+         */
+         left:
+         top:
+         right:
+         bottom:
+
     },
     //连续的坐标尺，用于数据筛选和颜色确定
     visualMap: {
@@ -73,6 +82,28 @@
         splitLine: {
              show: false
         }
+        /*
+         *4.14新加属性
+         *
+         */
+         //坐标轴是否翻转
+         inverse:true,
+         //是否间隔浅色、深色划分x轴
+         splitArea:{show:true}
+         //坐标线
+         axisLine:{show:true}
+         //坐标刻度字体设置
+         axisLabel:{
+            inside:false,
+            textStyle:{
+                color:'#fff'
+            }
+         }
+         //是否显示坐标刻度
+         axisTick:{
+            show:true
+         }
+
     },
     //y轴属性
     yAxis:{
@@ -86,9 +117,15 @@
              show: false
         }
     },
+    /*
+     *4.14新加属性
+     */
     //绘图区相对于svg画布的偏移
     grid:{
-        top:,left:,right:,bottom:
+        left=50,
+        top=50,
+        bottom=50,
+        right=50
     }
     series:[{
         //和legend里面的data对应
