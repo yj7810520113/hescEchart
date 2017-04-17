@@ -41,7 +41,7 @@
         gridBottom=50,
         gridRight=50,
         /*
-        title相关属性
+         title相关属性
          */
         title = '我是标题，请设置title属性',
         subtitle = false,
@@ -50,8 +50,9 @@
         titleLeft=10,
         titleTextStyleFontSize=20,
         titleTextStyleColor='#000',
+        tooltipAxisPointerType='shadow',
         /*
-        legend相关属性
+         legend相关属性
          */
         //legend数据的图示，默认为x轴坐标的数值
         legendAttr = '',
@@ -64,7 +65,7 @@
         //另存为图片等部分
         toolboxAttr = 'default',
         /*
-        坐标轴相关属性
+         坐标轴相关属性
          */
         //x轴显示的坐标文字
         xAxisData = '',
@@ -77,6 +78,7 @@
         xAxisAxisLabelInside=false,
         xAxisAxisLabelTextStyleColor='#000',
         xAxisAxisTickShow=true,
+        xAxisBoundaryGap=true,
         //y轴显示的坐标文字
         yAxisDataAttr = '',
         //y轴是否显示网格
@@ -94,13 +96,13 @@
         reverse=false;
 
     var bar=function (asyncData) {
-            //----------------图形相关属性--------
-            // dom='body',
-            // width='800px',
-            // height='600px';
-            //----------------asyncJson数据相关属性----
-            //n为默认坐标下，元素的个数，即为x轴个数
-            var dataNum=0;
+        //----------------图形相关属性--------
+        // dom='body',
+        // width='800px',
+        // height='600px';
+        //----------------asyncJson数据相关属性----
+        //n为默认坐标下，元素的个数，即为x轴个数
+        var dataNum=0;
         //设置series个数，即为多维柱状图的维数
         var seriesNum = 0;
 
@@ -112,15 +114,14 @@
         dataNum = asyncData.length;
         //设置series个数，即为多维柱状图的维数
         seriesNum = asyncData[0].length;
-        //设置legend的图示如果没有设置lengattr属性，legend图示从第一个元素的x轴值获取
+        //设置legend的图示如果没有设置lengattr属性，legend图示取默认值
         if(legendAttr.length==0){
             legendAttr=[];
-            asyncData[0].forEach(function (data2) {
-            for (var key in data2) {
-                legendAttr.push(key);
-            }
+            asyncData[0].forEach(function (data2,i) {
+                legendAttr.push('默认值'+i);
+            });
             // console.log();
-        });}
+        }
         //否则将legendAttr转换为array
         else{
             legendAttr=stringToArray(legendAttr);
@@ -159,7 +160,7 @@
                 align:legendAlign,
                 left:legendLeft,
                 top:legendTop
-              //  align:left
+                //  align:left
             },
             toolbox:{
 
@@ -167,7 +168,7 @@
             tooltip:{
                 trigger:'axis',
                 axisPointer:{
-                    type:'shadow'
+                    type:tooltipAxisPointerType
                 }
             },
             xAxis:{
@@ -186,7 +187,10 @@
                             else {
                                 var defaultXAxisData = [];
                                 for (var i = 0; i < dataNum; i++) {
-                                    defaultXAxisData.push('默认值' + i);
+                                    var jsonO=(asyncData[i])[0];
+                                    for(var jsonKey in jsonO){
+                                        defaultXAxisData.push(jsonKey);
+                                    }
                                 }
                                 return defaultXAxisData;
                             }
@@ -208,8 +212,8 @@
                 })(),
                 splitLine:{
                     show:xAxisGridLineAttr
-                 },
-                 //------------4.14添加属性
+                },
+                //------------4.14添加属性
                 position:xAxisPosition,
                 inverse:xAxisInverse,
                 splitArea:{show:xAxisSplitAreaShow},
@@ -222,7 +226,8 @@
                 },
                 axisTick:{
                     show:xAxisAxisTickShow
-                }
+                },
+                boundaryGap:xAxisBoundaryGap
             },
             yAxis:{
                 data:(function () {
@@ -233,14 +238,17 @@
                         }
                         else {
                             //返回默认xAxis坐标点的值
-                            if (seriesNum == 1 && legendAttr.length!=0) {
+                            if (seriesNum == 1 &&legendAttr.length!=0) {
                                 //若为一维普通普通柱状图返回legendAttr即为坐标点值
                                 return legendAttr;
                             }
                             else {
                                 var defaultXAxisData = [];
                                 for (var i = 0; i < dataNum; i++) {
-                                    defaultXAxisData.push('默认值' + i);
+                                    var jsonO=(asyncData[i])[0];
+                                    for(var jsonKey in jsonO){
+                                        defaultXAxisData.push(jsonKey);
+                                    }
                                 }
                                 return defaultXAxisData;
                             }
@@ -295,6 +303,7 @@
                     var series1={
                         name:legendAttr[i],
                         type:'bar',
+                        areaStyle:{normal:{}},
                         stack:(function () {
                             if(stackAttr.length==0){
                                 return null;
@@ -373,6 +382,10 @@
     }
     var titleTextStyleColorFun=function (x) {
         titleTextStyleColor=x;
+        return this;
+    }
+    var tooltipAxisPointerTypeFun=function (x) {
+        tooltipAxisPointerType=x;
         return this;
     }
     var legendAttrFun=function (x) {
@@ -469,6 +482,10 @@
         xAxisAxisTickShow=x;
         return this;
     }
+    var xAxisBoundaryGapFun=function (x) {
+        xAxisBoundaryGap=x;
+        return this;
+    }
     var yAxisPositionFun=function (x) {
         yAxisPosition=x;
         return this;
@@ -506,7 +523,7 @@
     exports.render=render;
     exports.background=backgroundColorFun;
     /*
-    title相关属性
+     title相关属性
      */
     exports.title=titleFun;
     exports.subtitle=subtitleFun;
@@ -516,14 +533,15 @@
     exports.titleTextStyleFontSize=titleTextStyleFontSizeFun;
     exports.titleTextStyleColor=titleTextStyleColorFun;
     /*
-    Grid相关属性
+     Grid相关属性
      */
     exports.gridLeft=gridLeftFun;
     exports.gridRight=gridRightFun;
     exports.gridTop=gridTopFun;
     exports.gridBottom=gridBottomFun;
+    exports.tooltipAxisPointerType=tooltipAxisPointerTypeFun;
     /*
-    legend相关属性
+     legend相关属性
      */
     exports.legendAttr=legendAttrFun;
     exports.legendAlign=legendAlignFun;
@@ -531,7 +549,7 @@
     exports.legendTop=legendTopFun;
 
     /*
-    坐标轴相关属性
+     坐标轴相关属性
      */
     exports.xAxisPosition=xAxisPositionFun;
     exports.xAxisInverse=xAxisInverseFun;
@@ -542,6 +560,7 @@
     exports.xAxisAxisTickShow=xAxisAxisTickShowFun;
     exports.xAxisData=xAxisDataFun;
     exports.xAxisGridLineAttr=xAxisGridLineAttrFun;
+    exports.xAxisBoundaryGap=xAxisBoundaryGapFun;
     exports.yAxisPosition=yAxisPositionFun;
     exports.yAxisData=yAxisDataAttrFun;
     exports.yAxisGridLineAttr=yAxisGridLineAttrFun;
