@@ -20,17 +20,53 @@
 ```
 使用方法：
 ```html
-<div id="test" style="width: 600px;height:400px;"/>
+<div id="test" style="width: 600px;height:400px;">
+</div>
 <script type="text/javascript">
-    var data=hescEchart.json('./barChartTest.Data',function(error,data){
+    hescEchart.json('../Data/barChartTest.Data',function(error,data){
         hescEchart.select('test')
-            .title('TEST')
-            .legendAttr(["test1","test2"])//x轴值
-            // .reverse(false)//x,y轴是否转置
-            //  .stack([1,1,1,2])//是否为堆叠图以及堆叠图数据样式
-            .bar(data)//传递数据
-            .render();//渲染
-    });
+            .background(barObj.backgroundColor)
+            .title(barObj.title)
+            .subtitle(barObj.subtitle)
+            .titleBackgroundColor(barObj.titleBackgroundColor)
+            .titleTop(barObj.titleTop)
+            .titleLeft(barObj.titleLeft)
+            .titleTextStyleFontSize(barObj.titleTextStyleFontSize)
+            .titleTextStyleColor(barObj.titleTextStyleColor)
+            .gridLeft(barObj.gridLeft)
+            .gridRight(barObj.gridRight)
+            .gridTop(barObj.gridTop)
+            .gridBottom(barObj.gridBottom)
+            .tooltipAxisPointerType(barObj.tooltipAxisPointerType)
+            .legendAttr(barObj.legend)
+            .legendAlign(barObj.legendAlign)
+            .legendLeft(barObj.legendLeft)
+            .legendTop(barObj.legendTop)
+            .xAxisData(barObj.xAxisData)
+            .xAxisGridLineAttr(barObj.xAxisGridLine)
+            .xAxisPosition(barObj.xAxisPosition)
+            .xAxisInverse(barObj.xAxisInverse)
+            .xAxisSplitAreaShow(barObj.xAxisSplitAreaShow)
+            .xAxisAxisLineShow(barObj.xAxisAxisLineShow)
+            .xAxisAxisLabelInside(barObj.xAxisAxisLabelInside)
+            .xAxisAxisLabelTextStyleColor(barObj.xAxisAxisLabelTextStyleColor)
+            .xAxisAxisTickShow(barObj.xAxisAxisTickShow)
+            .xAxisBoundaryGap(barObj.xAxisBoundaryGap)
+            .yAxisInverse(barObj.yAxisInverse)
+            .yAxisSplitAreaShow(barObj.yAxisSplitAreaShow)
+            .yAxisAxisLineShow(barObj.yAxisAxisLineShow)
+            .yAxisAxisLabelInside(barObj.yAxisAxisLabelInside)
+            .yAxisAxisLabelTextStyleColor(barObj.yAxisAxisLabelTextStyleColor)
+            .yAxisAxisTickShow(barObj.yAxisAxisTickShow)
+            .yAxisData(barObj.yAxisData)
+            .yAxisGridLineAttr(barObj.yAxisGridLine)
+            .reverse(barObj.reverse)
+            .stack(barObj.stack)
+            .bar(data)
+            .render();
+    });
+
+
 </script>
 ```
 [我的主页](http://mmcode.top)
